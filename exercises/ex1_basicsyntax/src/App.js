@@ -7,7 +7,9 @@ class App extends Component {
     people: [
       { name: "Max", age: "22" },
       { name: "Jhoni", age: "23" }
-    ]
+    ],
+    showBox : false,
+    buttonText : "Show"
   }
 
   switchHandler = () => {
@@ -16,6 +18,13 @@ class App extends Component {
         { name: "Maxiii", age: "226" },
         { name: "Jonathan", age: "235" }
       ]
+    })
+  }
+
+  toggleHandler = () => {
+    this.setState({
+      showBox : !this.state.showBox,
+      buttonText : this.state.showBox ? "Show" : "Hide"
     })
   }
 
@@ -37,9 +46,14 @@ class App extends Component {
     return (
       <div className="App">
         <h1> Hi</h1>
-        <button style={style} onClick={this.switchHandler}> Switch name</button>
-        <Person  name={this.state.people[0].name} age={this.state.people[0].age}>  My hobbies: swim </Person>
-        <Person change={this.nameChangeHandler} name={this.state.people[1].name} age={this.state.people[1].age} />
+        <button  onClick={this.toggleHandler}> {this.state.buttonText}</button>
+        { this.state.showBox ?
+          <div>
+            <button style={style} onClick={this.switchHandler}> Switch name</button>
+            <Person  name={this.state.people[0].name} age={this.state.people[0].age}>  My hobbies: swim </Person>
+            <Person change={this.nameChangeHandler} name={this.state.people[1].name} age={this.state.people[1].age} />
+          </div> : null
+        }
       </div>
     );
   }
