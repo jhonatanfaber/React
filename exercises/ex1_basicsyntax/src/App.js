@@ -8,8 +8,8 @@ class App extends Component {
       { name: "Max", age: "22" },
       { name: "Jhoni", age: "23" }
     ],
-    showBox : false,
-    buttonText : "Show"
+    showBox: false,
+    buttonText: "Show"
   }
 
   switchHandler = () => {
@@ -23,15 +23,15 @@ class App extends Component {
 
   toggleHandler = () => {
     this.setState({
-      showBox : !this.state.showBox,
-      buttonText : this.state.showBox ? "Show" : "Hide"
+      showBox: !this.state.showBox,
+      buttonText: this.state.showBox ? "Show" : "Hide"
     })
   }
 
   nameChangeHandler = (event) => {
     this.setState({
       people: [
-        { name: "Max" , age: "22" },
+        { name: "Max", age: "22" },
         { name: event.target.value, age: "23" }
       ]
     })
@@ -39,21 +39,29 @@ class App extends Component {
 
   render() {
     const style = {
-      border : "1px solid blue",
+      border: "1px solid blue",
       marginBottom: '10px',
     }
+
+    let people = null
+
+    if (this.state.showBox) {
+      people = (
+        <div>
+          <button style={style} onClick={this.switchHandler}> Switch name</button>
+          <Person name={this.state.people[0].name} age={this.state.people[0].age}>  My hobbies: swim </Person>
+          <Person change={this.nameChangeHandler} name={this.state.people[1].name} age={this.state.people[1].age} />
+        </div>
+      )
+    }
+
+
 
     return (
       <div className="App">
         <h1> Hi</h1>
-        <button  onClick={this.toggleHandler}> {this.state.buttonText}</button>
-        { this.state.showBox ?
-          <div>
-            <button style={style} onClick={this.switchHandler}> Switch name</button>
-            <Person  name={this.state.people[0].name} age={this.state.people[0].age}>  My hobbies: swim </Person>
-            <Person change={this.nameChangeHandler} name={this.state.people[1].name} age={this.state.people[1].age} />
-          </div> : null
-        }
+        <button onClick={this.toggleHandler}> {this.state.buttonText}</button>
+        {people}
       </div>
     );
   }
