@@ -21,6 +21,19 @@ class App extends Component {
     })
   }
 
+  switchNameHandler = (id, event) => {
+    const personIndex = this.state.people.findIndex(p => p.id == id)
+    const person = { ...this.state.people[personIndex] }
+    person.name = event.target.value
+
+    const people = [... this.state.people]
+    people[personIndex] = person
+
+    this.setState({people: people })
+  }
+
+
+
   toggleHandler = () => {
     this.setState({
       showBox: !this.state.showBox,
@@ -47,7 +60,14 @@ class App extends Component {
         <div>
           <button style={style} onClick={this.switchHandler}> Switch name</button>
           {this.state.people.map((person, index) => {
-            return <Person name={person.name} age={person.age} key={person.id} delete={this.deleteItem.bind(this, index)}> </Person>
+            return <Person
+              name={person.name}
+              age={person.age}
+              key={person.id}
+              delete={this.deleteItem.bind(this, index)}
+              changeName={this.switchNameHandler.bind(this, person.id)}
+            >
+            </Person>
           })}
         </div>
       )
