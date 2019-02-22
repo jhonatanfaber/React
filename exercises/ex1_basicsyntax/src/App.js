@@ -5,8 +5,8 @@ import './App.css';
 class App extends Component {
   state = {
     people: [
-      { name: "Max", age: "22" },
-      { name: "Jhoni", age: "23" }
+      { name: "Max", age: "22", id: 1 },
+      { name: "Jhoni", age: "23", id: 2 }
     ],
     showBox: false,
     buttonText: "Show"
@@ -28,13 +28,10 @@ class App extends Component {
     })
   }
 
-  nameChangeHandler = (event) => {
-    this.setState({
-      people: [
-        { name: "Max", age: "22" },
-        { name: event.target.value, age: "23" }
-      ]
-    })
+  deleteItem = (index) => {
+    let people = [...this.state.people]
+    people.splice(index, 1)
+    this.setState({ people: people })
   }
 
   render() {
@@ -49,8 +46,9 @@ class App extends Component {
       people = (
         <div>
           <button style={style} onClick={this.switchHandler}> Switch name</button>
-          <Person name={this.state.people[0].name} age={this.state.people[0].age}>  My hobbies: swim </Person>
-          <Person change={this.nameChangeHandler} name={this.state.people[1].name} age={this.state.people[1].age} />
+          {this.state.people.map((person, index) => {
+            return <Person name={person.name} age={person.age} key={person.id} delete={this.deleteItem.bind(this, index)}> </Person>
+          })}
         </div>
       )
     }
